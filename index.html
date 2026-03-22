@@ -187,5 +187,16 @@
     <div class="confetti-container" id="confettiContainer"></div>
 
     <script src="js/app.js"></script>
+    <div style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:99999; background:white; padding:40px; border-radius:15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);">
+    <h2 style="margin-bottom:20px; color:black;">Войти через Telegram</h2>
+    <script async src="https://telegram.org/js/telegram-widget.js?22"
+        data-telegram-login="mayoraclaude_bot"
+        data-size="large"
+        data-radius="10"
+        data-onauth="onTelegramAuth(user)"
+        data-request-access="write">
+    </script>
+</div>
+
 </body>
 </html>
