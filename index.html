@@ -3,199 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Majestic Cases — Открытие кейсов</title>
+    <title>MAJESTIC CASES — Открытие кейсов</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="index">
 
-    <!-- Background -->
-    <div class="bg-animation"></div>
-    <div class="particles" id="particles"></div>
+<div id="particles" class="particles"></div>
 
-    <!-- Header -->
-    <header class="header" id="header">
+<!-- HEADER -->
+<header id="header" class="header">
+    <div class="header-inner">
         <a href="index.html" class="logo">
-            <div class="logo-icon">M</div>
-            <div class="logo-text">MAJESTIC <span>CASES</span></div>
+            <span class="logo-icon">💎</span>
+            <span class="logo-text">MAJESTIC<span class="logo-accent">CASES</span></span>
         </a>
-
-        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">☰</button>
-
         <nav class="nav">
-            <a href="index.html" class="nav-link active">
-                <span class="nav-icon">🎰</span> Кейсы
-            </a>
-            <a href="inventory.html" class="nav-link">
-                <span class="nav-icon">🎒</span> Инвентарь
-            </a>
-            <a href="#" class="nav-link" onclick="showNotification('🔧', 'Раздел в разработке'); return false;">
-                <span class="nav-icon">⬆️</span> Апгрейд
-            </a>
-            <a href="#" class="nav-link" onclick="showNotification('🔧', 'Раздел в разработке'); return false;">
-                <span class="nav-icon">📜</span> Контракты
-            </a>
+            <a href="index.html" class="nav-link active">🎰 Кейсы</a>
+            <a href="inventory.html" class="nav-link">🎒 Инвентарь</a>
+            <a href="profile.html" class="nav-link">👤 Профиль</a>
         </nav>
-
         <div class="header-right">
-            <div class="balance-display" onclick="openDeposit()">
+            <div class="balance" onclick="openDeposit()">
                 <span class="balance-icon">💎</span>
                 <span class="balance-amount">0</span>
-                <span class="balance-add">+</span>
+                <span class="balance-plus">+</span>
             </div>
-            <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
-
-            <!-- Не авторизован -->
-            <button class="btn-login" id="btnLogin" onclick="openAuthModal()">
-                <svg class="tg-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                </svg>
-                Войти
+            <button id="btnLogin" class="btn-login" onclick="openAuthModal()">
+                <span>👤</span> Войти
             </button>
-
-            <!-- Авторизован -->
-            <div class="user-profile" id="userProfile" style="display:none;" onclick="toggleUserMenu()">
-                <img class="user-avatar-img" id="userAvatarImg" src="" alt="">
-                <div class="user-avatar-fallback" id="userAvatarFallback">MJ</div>
-                <span class="user-name" id="userName"></span>
-                <div class="user-menu" id="userMenu">
+            <div id="userProfile" class="user-profile" style="display:none" onclick="toggleUserMenu()">
+                <div class="user-avatar">
+                    <img id="userAvatarImg" class="user-avatar-img" src="" alt="">
+                    <span id="userAvatarFallback" class="user-avatar-fallback">U</span>
+                </div>
+                <span id="userName" class="user-name">User</span>
+                <div id="userMenu" class="user-menu">
                     <div class="user-menu-header">
-                        <img class="user-menu-avatar" id="menuAvatar" src="" alt="">
+                        <img id="menuAvatar" class="user-menu-avatar" src="" alt="">
                         <div>
-                            <div class="user-menu-name" id="menuName"></div>
-                            <div class="user-menu-username" id="menuUsername"></div>
+                            <div id="menuName" class="user-menu-name">User</div>
+                            <div id="menuUsername" class="user-menu-username">@user</div>
                         </div>
                     </div>
                     <div class="user-menu-divider"></div>
-                    <a class="user-menu-item" href="inventory.html">🎒 Мой инвентарь</a>
-                    <a class="user-menu-item" href="#" onclick="openDeposit(); return false;">💎 Пополнить баланс</a>
+                    <a href="profile.html" class="user-menu-item">👤 Профиль</a>
+                    <a href="inventory.html" class="user-menu-item">🎒 Инвентарь</a>
+                    <a href="admin.html" class="user-menu-item">⚙️ Админ-панель</a>
                     <div class="user-menu-divider"></div>
-                    <button class="user-menu-item logout" onclick="logoutUser()">🚪 Выйти</button>
+                    <div class="user-menu-item" onclick="logoutUser()">🚪 Выйти</div>
                 </div>
             </div>
+            <button class="btn-sound" id="soundToggle" onclick="toggleSound()">🔊</button>
+            <button class="btn-mobile-nav" onclick="toggleMobileNav()">☰</button>
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- Main -->
-    <main class="main">
-
-        <!-- Live Drops -->
-        <div class="live-drops">
-            <div class="live-drops-header">
-                <div class="live-dot"></div>
-                <div class="live-drops-title">Live Drops</div>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">MAJESTIC <span class="hero-accent">CASES</span></h1>
+        <p class="hero-desc">Открывай кейсы, выигрывай ценные предметы для GTA RP</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-value" id="totalOpened">0</span>
+                <span class="hero-stat-label">Кейсов открыто</span>
             </div>
-            <div class="live-drops-track" id="liveDrops"></div>
-        </div>
-
-        <!-- Hero Banner -->
-        <div class="hero-banner">
-            <div class="hero-badge">🔥 Горячее предложение</div>
-            <h1 class="hero-title">Открывай кейсы<br>Majestic RP</h1>
-            <p class="hero-subtitle">Испытай удачу и получи лучшие предметы для игры. Автомобили, бизнесы, донат и многое другое!</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-value" id="totalOpened">0</div>
-                    <div class="hero-stat-label">Кейсов открыто</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">24,591</div>
-                    <div class="hero-stat-label">Игроков онлайн</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value">$2.4M</div>
-                    <div class="hero-stat-label">Выиграно сегодня</div>
-                </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">9+</span>
+                <span class="hero-stat-label">Видов кейсов</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">70+</span>
+                <span class="hero-stat-label">Предметов</span>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- Cases Section -->
-        <div class="section-header">
-            <div>
-                <h2 class="section-title"><span class="emoji">📦</span> Доступные кейсы</h2>
-                <p class="section-subtitle">Выберите кейс и испытайте удачу</p>
-            </div>
-            <div class="section-filters">
-                <button class="filter-btn active" onclick="filterCases('all', this)">Все</button>
-                <button class="filter-btn" onclick="filterCases('popular', this)">🔥 Популярные</button>
-                <button class="filter-btn" onclick="filterCases('new', this)">✨ Новые</button>
-                <button class="filter-btn" onclick="filterCases('premium', this)">💎 Премиум</button>
-            </div>
+<!-- LIVE DROPS -->
+<section class="live-drops-section">
+    <div class="live-drops-header">
+        <div class="live-indicator"><span class="live-dot"></span> LIVE DROPS</div>
+    </div>
+    <div class="live-drops-track-wrapper">
+        <div id="liveDropsTrack" class="live-drops-track"></div>
+    </div>
+</section>
+
+<!-- CASES -->
+<section class="cases-section">
+    <div class="section-header">
+        <h2 class="section-title">🎰 Выбери свой кейс</h2>
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCases('all', this)">Все</button>
+            <button class="filter-btn" onclick="filterCases('popular', this)">🔥 Popular</button>
+            <button class="filter-btn" onclick="filterCases('premium', this)">👑 Premium</button>
+            <button class="filter-btn" onclick="filterCases('new', this)">✨ New</button>
         </div>
+    </div>
+    <div id="casesGrid" class="cases-grid"></div>
+</section>
 
-        <div class="cases-grid" id="casesGrid"></div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">💎 MAJESTIC CASES</div>
+        <div class="footer-text">© 2024 Majestic Cases. Все предметы виртуальные.</div>
         <div class="footer-links">
-            <a class="footer-link" href="#">Правила</a>
-            <a class="footer-link" href="#">FAQ</a>
-            <a class="footer-link" href="#">Поддержка</a>
-            <a class="footer-link" href="#">Discord</a>
-            <a class="footer-link" href="#">VK</a>
-        </div>
-        <p class="footer-copy">© 2024 Majestic Cases. Все права защищены.<br>Не является официальным сайтом Majestic RP.</p>
-    </footer>
-
-    <!-- Deposit Modal -->
-    <div class="modal-overlay" id="depositModal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeDeposit()">✕</button>
-            <div class="modal-title">💎 Пополнить баланс</div>
-            <div class="deposit-amounts">
-                <button class="deposit-amount-btn" onclick="setDepositAmount(1000)">1,000</button>
-                <button class="deposit-amount-btn" onclick="setDepositAmount(5000)">5,000</button>
-                <button class="deposit-amount-btn" onclick="setDepositAmount(10000)">10,000</button>
-                <button class="deposit-amount-btn" onclick="setDepositAmount(25000)">25,000</button>
-                <button class="deposit-amount-btn" onclick="setDepositAmount(50000)">50,000</button>
-                <button class="deposit-amount-btn" onclick="setDepositAmount(100000)">100,000</button>
-            </div>
-            <input type="number" class="deposit-input" id="depositInput" placeholder="Введите сумму" value="10000">
-            <button class="btn-deposit-confirm" onclick="confirmDeposit()">✅ Пополнить баланс</button>
+            <a href="admin.html">Админ-панель</a>
         </div>
     </div>
+</footer>
 
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal-box auth-modal-box">
-            <button class="modal-close" onclick="closeAuthModal()">✕</button>
-            <div class="auth-modal-icon">
-                <svg viewBox="0 0 24 24" width="48" height="48" fill="#29B6F6">
-                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                </svg>
-            </div>
-            <div class="modal-title">Вход через Telegram</div>
-            <p class="auth-modal-desc">Авторизуйтесь через Telegram для сохранения прогресса и доступа ко всем функциям</p>
-            <div class="auth-widget-container" id="telegramWidgetContainer"></div>
-            <div class="auth-features">
-                <div class="auth-feature"><span>💾</span> Сохранение прогресса</div>
-                <div class="auth-feature"><span>🎒</span> Инвентарь на аккаунте</div>
-                <div class="auth-feature"><span>🏆</span> Рейтинг игроков</div>
-                <div class="auth-feature"><span>🔒</span> Безопасная авторизация</div>
-            </div>
+<!-- DEPOSIT MODAL -->
+<div id="depositModal" class="modal-overlay" onclick="if(event.target===this)closeDeposit()">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeDeposit()">✕</button>
+        <div class="modal-title">💎 Пополнение баланса</div>
+        <div class="deposit-amounts">
+            <button class="deposit-btn" onclick="setDepositAmount(1000)">1 000</button>
+            <button class="deposit-btn" onclick="setDepositAmount(5000)">5 000</button>
+            <button class="deposit-btn" onclick="setDepositAmount(10000)">10 000</button>
+            <button class="deposit-btn" onclick="setDepositAmount(50000)">50 000</button>
+            <button class="deposit-btn" onclick="setDepositAmount(100000)">100 000</button>
+        </div>
+        <div class="deposit-custom">
+            <input type="number" id="depositInput" placeholder="Введите сумму" min="1">
+            <button class="deposit-confirm" onclick="confirmDeposit()">Пополнить</button>
         </div>
     </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <span class="notification-icon" id="notifIcon"></span>
-        <span class="notification-text" id="notifText"></span>
-    </div>
-
-    <!-- Confetti -->
-    <div class="confetti-container" id="confettiContainer"></div>
-
-    <script src="js/app.js"></script>
-<div style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:99999; background:white; padding:40px; border-radius:15px; box-shadow: 0 0 30px rgba(0,0,0,0.5);">
-    <h2 style="margin-bottom:20px; color:black;">Войти через Telegram</h2>
-    <script async src="https://telegram.org/js/telegram-widget.js?22"
-        data-telegram-login="mayoraclaude_bot"
-        data-size="large"
-        data-radius="10"
-        data-onauth="onTelegramAuth(user)"
-        data-request-access="write">
-    </script>
 </div>
+
+<!-- AUTH MODAL -->
+<div id="authModal" class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
+    <div class="modal-box auth-modal-box">
+        <button class="modal-close" onclick="closeAuthModal()">✕</button>
+        <div class="modal-title">👤 Вход / Регистрация</div>
+        <div class="auth-content">
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login',this)">Вход</button>
+                <button class="auth-tab" onclick="switchAuthTab('register',this)">Регистрация</button>
+            </div>
+            <div id="authLoginForm" class="auth-form">
+                <div class="form-group"><input type="text" id="loginUsername" placeholder="Имя пользователя"></div>
+                <div class="form-group"><input type="password" id="loginPassword" placeholder="Пароль"></div>
+                <button class="auth-submit-btn" onclick="loginUser()">🔑 Войти</button>
+            </div>
+            <div id="authRegisterForm" class="auth-form" style="display:none">
+                <div class="form-group"><input type="text" id="regUsername" placeholder="Имя пользователя"></div>
+                <div class="form-group"><input type="text" id="regDisplayName" placeholder="Отображаемое имя"></div>
+                <div class="form-group"><input type="password" id="regPassword" placeholder="Пароль"></div>
+                <div class="form-group"><input type="password" id="regPassword2" placeholder="Повторите пароль"></div>
+                <button class="auth-submit-btn" onclick="registerUser()">✅ Зарегистрироваться</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notification" class="notification">
+    <span id="notifIcon" class="notif-icon">✅</span>
+    <span id="notifText" class="notif-text">Текст</span>
+</div>
+
+<!-- CONFETTI -->
+<div id="confettiContainer" class="confetti-container"></div>
+
+<script src="js/app.js"></script>
 </body>
 </html>
