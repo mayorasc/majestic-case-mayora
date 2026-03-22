@@ -167,7 +167,18 @@
             </div>
             <div class="modal-title">Вход через Telegram</div>
             <p class="auth-modal-desc">Авторизуйтесь через Telegram для сохранения прогресса и доступа ко всем функциям</p>
-            <div class="auth-widget-container" id="telegramWidgetContainer"></div>
+            
+            <!-- TELEGRAM WIDGET -->
+            <div class="auth-widget-container" id="telegramWidgetContainer">
+                <script async src="https://telegram.org/js/telegram-widget.js?22"
+                    data-telegram-login="mayoraclaude_bot"
+                    data-size="large"
+                    data-radius="10"
+                    data-onauth="onTelegramAuth(user)"
+                    data-request-access="write">
+                </script>
+            </div>
+
             <div class="auth-features">
                 <div class="auth-feature"><span>💾</span> Сохранение прогресса</div>
                 <div class="auth-feature"><span>🎒</span> Инвентарь на аккаунте</div>
@@ -187,34 +198,141 @@
     <div class="confetti-container" id="confettiContainer"></div>
 
     <script src="js/app.js"></script>
+
     <script>
-function onTelegramAuth(user) {
-    console.log('Telegram auth success:', user);
-    
-    var userData = {
-        id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name || '',
-        username: user.username || '',
-        photo_url: user.photo_url || '',
-        auth_date: user.auth_date,
-        hash: user.hash
-    };
-    
-    localStorage.setItem('telegramUser', JSON.stringify(userData));
-    
-    // Убираем экран входа
-    var authScreen = document.getElementById('auth-screen');
-    if (authScreen) authScreen.style.display = 'none';
-    
-    // Показываем основной контент
-    var mainContent = document.getElementById('main-content');
-    if (mainContent) mainContent.style.display = 'block';
-    
-    // Перезагружаем страницу
-    window.location.reload();
-}
-</script>
+    /* ===== TELEGRAM AUTH ===== */
+    function onTelegramAuth(user) {
+        console.log('Telegram auth success:', user);
+
+        var userData = {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name || '',
+            username: user.username || '',
+            photo_url: user.photo_url || '',
+            auth_date: user.auth_date,
+            hash: user.hash
+        };
+
+        localStorage.setItem('telegramUser', JSON.stringify(userData));
+
+        // Закрываем модалку
+        var modal = document.getElementById('authModal');
+        if (modal) modal.classList.remove('active');
+
+        // Скрываем кнопку Войти
+        var btnLogin = document.getElementById('btnLogin');
+        if (btnLogin) btnLogin.style.display = 'none';
+
+        // Показываем профиль
+        var userProfile = document.getElementById('userProfile');
+        if (userProfile) {
+            userProfile.style.display = 'flex';
+
+            var userNameEl = document.getElementById('userName');
+            if (userNameEl) userNameEl.textContent = user.first_name;
+
+            var menuName = document.getElementById('menuName');
+            if (menuName) menuName.textContent = user.first_name + ' ' + (user.last_name || '');
+
+            var menuUsername = document.getElementById('menuUsername');
+            if (menuUsername) menuUsername.textContent = user.username ? '@' + user.username : '';
+
+            var avatarImg = document.getElementById('userAvatarImg');
+            var avatarFallback = document.getElementById('userAvatarFallback');
+            var menuAvatar = document.getElementById('menuAvatar');
+
+            if (user.photo_url) {
+                if (avatarImg) { avatarImg.src = user.photo_url; avatarImg.style.display = 'block'; }
+                if (avatarFallback) avatarFallback.style.display = 'none';
+                if (menuAvatar) { menuAvatar.src = user.photo_url; menuAvatar.style.display = 'block'; }
+            } else {
+                var letter = user.first_name.charAt(0).toUpperCase();
+                if (avatarFallback) { avatarFallback.textContent = letter; avatarFallback.style.display = 'flex'; }
+                if (avatarImg) avatarImg.style.display = 'none';
+            }
+        }
+
+        if (typeof showNotification === 'function') {
+            showNotification('✅', 'Добро пожаловать, ' + user.first_name + '!');
+        } else {
+            alert('Добро пожаловать, ' + user.first_name + '!');
+        }
+    }
+
+    /* ===== ПРОВЕРКА АВТОРИЗАЦИИ ПРИ ЗАГРУЗКЕ ===== */
+    (function checkAuth() {
+        var saved = localStorage.getItem('telegramUser');
+        if (saved) {
+            try {
+                var user = JSON.parse(saved);
+                var btnLogin = document.getElementById('btnLogin');
+                if (btnLogin) btnLogin.style.display = 'none';
+
+                var userProfile = document.getElementById('userProfile');
+                if (userProfile) {
+                    userProfile.style.display = 'flex';
+
+                    var userNameEl = document.getElementById('userName');
+                    if (userNameEl) userNameEl.textContent = user.first_name;
+
+                    var menuName = document.getElementById('menuName');
+                    if (menuName) menuName.textContent = user.first_name + ' ' + (user.last_name || '');
+
+                    var menuUsername = document.getElementById('menuUsername');
+                    if (menuUsername) menuUsername.textContent = user.username ? '@' + user.username : '';
+
+                    var avatarImg = document.getElementById('userAvatarImg');
+                    var avatarFallback = document.getElementById('userAvatarFallback');
+                    var menuAvatar = document.getElementById('menuAvatar');
+
+                    if (user.photo_url) {
+                        if (avatarImg) { avatarImg.src = user.photo_url; avatarImg.style.display = 'block'; }
+                        if (avatarFallback) avatarFallback.style.display = 'none';
+                        if (menuAvatar) { menuAvatar.src = user.photo_url; menuAvatar.style.display = 'block'; }
+                    } else {
+                        var letter = user.first_name.charAt(0).toUpperCase();
+                        if (avatarFallback) { avatarFallback.textContent = letter; avatarFallback.style.display = 'flex'; }
+                        if (avatarImg) avatarImg.style.display = 'none';
+                    }
+                }
+            } catch(e) {
+                localStorage.removeItem('telegramUser');
+            }
+        }
+    })();
+
+    /* ===== МОДАЛКА АВТОРИЗАЦИИ ===== */
+    function openAuthModal() {
+        var modal = document.getElementById('authModal');
+        if (modal) modal.classList.add('active');
+    }
+
+    function closeAuthModal() {
+        var modal = document.getElementById('authModal');
+        if (modal) modal.classList.remove('active');
+    }
+
+    /* ===== ВЫХОД ===== */
+    function logoutUser() {
+        localStorage.removeItem('telegramUser');
+        window.location.reload();
+    }
+
+    /* ===== МЕНЮ ПОЛЬЗОВАТЕЛЯ ===== */
+    function toggleUserMenu() {
+        var menu = document.getElementById('userMenu');
+        if (menu) menu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(e) {
+        var profile = document.getElementById('userProfile');
+        var menu = document.getElementById('userMenu');
+        if (profile && menu && !profile.contains(e.target)) {
+            menu.classList.remove('active');
+        }
+    });
+    </script>
 
 </body>
 </html>
